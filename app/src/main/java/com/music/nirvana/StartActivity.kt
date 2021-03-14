@@ -2,6 +2,7 @@ package com.music.nirvana
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,12 +22,16 @@ class StartActivity : AppCompatActivity() {
     private lateinit var context: Context
     private var mSpotifyAppRemote: SpotifyAppRemote? = null
     private val REQUEST_CODE = 1337
+    private val SCOPES = "user-read-recently-played,user-library-modify,user-read-email,user-read-private"
+    private lateinit var prefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
         context= applicationContext
+        prefs = this.getSharedPreferences("com.music.nirvana", Context.MODE_PRIVATE)
+
         auth_button.setOnClickListener {
             loginWithSpotify()
         }
@@ -55,7 +60,7 @@ class StartActivity : AppCompatActivity() {
     }
 
     private fun connected() {
-        mSpotifyAppRemote?.playerApi?.play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
+        //mSpotifyAppRemote?.playerApi?.play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
     }
 
     private fun loginWithSpotify() {
@@ -65,7 +70,7 @@ class StartActivity : AppCompatActivity() {
             REDIRECT_URI
         )
 
-        builder.setScopes(arrayOf("streaming"))
+        builder.setScopes(arrayOf(SCOPES))
         val request = builder.build()
 
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request)
@@ -77,7 +82,10 @@ class StartActivity : AppCompatActivity() {
         if (requestCode == REQUEST_CODE) {
             val response = AuthenticationClient.getResponse(resultCode, intent)
             when (response.type) {
-                AuthenticationResponse.Type.TOKEN -> { }
+                AuthenticationResponse.Type.TOKEN -> {
+                    Toast.makeText(context, "Authenticated", Toast.LENGTH_LONG).show()
+                    prefs.edit().putString("Access Token", response.accessToken).apply()
+                }
                 AuthenticationResponse.Type.ERROR -> { }
                 else -> { }
             }

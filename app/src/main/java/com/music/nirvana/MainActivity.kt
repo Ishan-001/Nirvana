@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         if (checkSelfPermission(Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(
-                arrayOf(Manifest.permission.READ_CONTACTS),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 MY_PERMISSIONS_REQUEST_LOCATION
             )
         }
