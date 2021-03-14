@@ -12,7 +12,13 @@ import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
+import kaaes.spotify.webapi.android.SpotifyApi
+import kaaes.spotify.webapi.android.SpotifyCallback
+import kaaes.spotify.webapi.android.SpotifyError
+import kaaes.spotify.webapi.android.models.Pager
+import kaaes.spotify.webapi.android.models.SavedTrack
 import kotlinx.android.synthetic.main.activity_start.*
+import retrofit.client.Response
 
 
 class StartActivity : AppCompatActivity() {
@@ -22,8 +28,9 @@ class StartActivity : AppCompatActivity() {
     private lateinit var context: Context
     private var mSpotifyAppRemote: SpotifyAppRemote? = null
     private val REQUEST_CODE = 1337
-    private val SCOPES = "user-read-recently-played,user-library-modify,user-read-email,user-read-private"
+    private val SCOPES = "user-read-playback-position,user-read-private,user-read-email,playlist-read-private,user-library-read,user-library-modify,user-top-read,playlist-read-collaborative,playlist-modify-public,playlist-modify-private,ugc-image-upload,user-follow-read,user-follow-modify,user-read-playback-state,user-modify-playback-state,user-read-currently-playing,user-read-recently-played"
     private lateinit var prefs: SharedPreferences
+    private var token: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,13 +90,32 @@ class StartActivity : AppCompatActivity() {
             val response = AuthenticationClient.getResponse(resultCode, intent)
             when (response.type) {
                 AuthenticationResponse.Type.TOKEN -> {
-                    Toast.makeText(context, "Authenticated", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(context, "Authenticated", Toast.LENGTH_LONG).show()
+                    token = response.accessToken
                     prefs.edit().putString("Access Token", response.accessToken).apply()
+                    play()
                 }
-                AuthenticationResponse.Type.ERROR -> { }
+                AuthenticationResponse.Type.ERROR -> {
+                }
                 else -> { }
             }
         }
+    }
+
+    private fun play() {
+        val api = SpotifyApi().setAccessToken(token)
+        val service = api.service
+
+        service.getMySavedTracks(object : SpotifyCallback<Pager<SavedTrack?>?>() {
+            override fun success(savedTrackPager: Pager<SavedTrack?>?, response: Response?) {
+                val info = savedTrackPager?.items?.get(0)?.track?.name
+                Toast.makeText(context, info, Toast.LENGTH_LONG).show()
+            }
+
+            override fun failure(error: SpotifyError) {
+                Toast.makeText(context, error.localizedMessage, Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     override fun onStop() {
