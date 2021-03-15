@@ -1,5 +1,5 @@
 # NIRVANA
-![](assets\Banner.png)
+![](assets/Banner.png)
 
 ## Problem
 Finding songs takes a lots of time specially when you are a music lover. Spending hours on finding perfect music can hamper experience of a user.  
