@@ -16,8 +16,11 @@ class TrackAdapter internal constructor(
 ): RecyclerView.Adapter<TrackAdapter.ViewHolder>(){
 
     class ViewHolder constructor(itemView: View): RecyclerView.ViewHolder(itemView){
-        var title: TextView = itemView.findViewById(R.id.title)
-
+        var trackName: TextView = itemView.findViewById(R.id.track_name)
+        var trackArtist: TextView = itemView.findViewById(R.id.track_artist)
+        var trackVibe: TextView = itemView.findViewById(R.id.track_vibe)
+        var trackImage: TextView = itemView.findViewById(R.id.track_image)
+        var trackRecommendation: TextView = itemView.findViewById(R.id.track_recommendation)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackAdapter.ViewHolder {
         val view: View =

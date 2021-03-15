@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="130dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@drawable/nav_back"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_home_24"
+            android:background="@drawable/button_back_transparent"/>
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:src="@drawable/my_vibes_ic"
+            android:background="@drawable/button_back_transparent"/>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="60dp"/>
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:src="@drawable/my_playlists_ic"
+            android:background="@drawable/button_back_transparent"/>
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_user"
+            android:background="@drawable/button_back_transparent"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/blob"
+        android:background="@drawable/blob_back"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

@@ -49,9 +49,11 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/button_back_transparent"
         android:src="@drawable/ic_spotify_sign_in"
-        tools:layout_editor_absoluteX="93dp"
-        tools:layout_editor_absoluteY="657dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
