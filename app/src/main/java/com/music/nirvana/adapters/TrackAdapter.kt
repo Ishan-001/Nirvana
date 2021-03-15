@@ -4,14 +4,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.music.nirvana.R
-import kaaes.spotify.webapi.android.models.Track
+import com.music.nirvana.models.Track
+
 
 class TrackAdapter internal constructor(
     private val context: Context,
-    private val requestList: ArrayList<Track>
+    private val trackList: ArrayList<Track>
 
 ): RecyclerView.Adapter<TrackAdapter.ViewHolder>(){
 
@@ -19,7 +21,7 @@ class TrackAdapter internal constructor(
         var trackName: TextView = itemView.findViewById(R.id.track_name)
         var trackArtist: TextView = itemView.findViewById(R.id.track_artist)
         var trackVibe: TextView = itemView.findViewById(R.id.track_vibe)
-        var trackImage: TextView = itemView.findViewById(R.id.track_image)
+        var trackImage: ImageView = itemView.findViewById(R.id.track_image)
         var trackRecommendation: TextView = itemView.findViewById(R.id.track_recommendation)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackAdapter.ViewHolder {
@@ -29,12 +31,13 @@ class TrackAdapter internal constructor(
     }
 
     override fun onBindViewHolder(holder: TrackAdapter.ViewHolder, position: Int) {
-        val request= requestList[position]
-
-
+        holder.trackName.text = trackList[position].name
+        holder.trackArtist.text = trackList[position].artist
+        holder.trackVibe.text = trackList[position].vibe
+        holder.trackRecommendation.text = trackList[position].recommendation+"%"
     }
 
     override fun getItemCount(): Int {
-        return requestList.size
+        return trackList.size
     }
 }

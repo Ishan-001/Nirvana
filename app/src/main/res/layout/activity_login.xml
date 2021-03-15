@@ -50,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
+        android:id="@+id/login_button"
         android:background="@drawable/button_back_transparent"
         android:src="@drawable/ic_spotify_sign_in"
         app:layout_constraintBottom_toBottomOf="parent"

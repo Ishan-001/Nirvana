@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
+    android:background="@drawable/track_back"
     app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#393939">
+        android:background="@drawable/track_back">
 
         <ImageView
             android:id="@+id/track_image"
@@ -26,13 +26,13 @@
 
         <TextView
             android:id="@+id/track_name"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="12dp"
             android:text="Shape of you"
             android:textColor="#fff"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/track_image"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,7 +92,7 @@
             android:layout_marginEnd="24dp"
             android:text="38%"
             android:textColor="#fff"
-            android:textSize="40sp"
+            android:textSize="36sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"

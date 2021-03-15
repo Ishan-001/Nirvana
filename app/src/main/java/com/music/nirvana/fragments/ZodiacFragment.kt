@@ -9,10 +9,9 @@ import android.widget.GridView
 import androidx.fragment.app.Fragment
 import com.music.nirvana.R
 import com.music.nirvana.adapters.ImageAdapter
-import kotlinx.android.synthetic.main.screen_genre.*
 
 
-class GenreFragment() : Fragment() {
+class ZodiacFragment() : Fragment() {
     constructor(context: Context) : this()
 
     override fun onCreateView(
@@ -20,13 +19,10 @@ class GenreFragment() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root=inflater.inflate(R.layout.screen_genre, container, false)
+        val root=inflater.inflate(R.layout.zodiac_screen, container, false)
 
-        val imageAdapter = ImageAdapter(activity)
-        val grid = root.findViewById<GridView>(R.id.gridview)
-        grid.adapter = imageAdapter
+
 
         return root
     }
-
 }

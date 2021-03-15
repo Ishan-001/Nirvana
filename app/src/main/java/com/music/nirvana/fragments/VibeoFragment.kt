@@ -2,6 +2,7 @@ package com.music.nirvana.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,10 @@ import android.widget.GridView
 import androidx.fragment.app.Fragment
 import com.music.nirvana.R
 import com.music.nirvana.adapters.ImageAdapter
-import kotlinx.android.synthetic.main.screen_genre.*
+import kotlinx.android.synthetic.main.fragment_vibe.view.*
 
 
-class GenreFragment() : Fragment() {
+class VibeoFragment() : Fragment() {
     constructor(context: Context) : this()
 
     override fun onCreateView(
@@ -20,13 +21,13 @@ class GenreFragment() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root=inflater.inflate(R.layout.screen_genre, container, false)
+        val root=inflater.inflate(R.layout.fragment_vibe, container, false)
 
-        val imageAdapter = ImageAdapter(activity)
-        val grid = root.findViewById<GridView>(R.id.gridview)
-        grid.adapter = imageAdapter
+        root.find_vibe.setOnClickListener{
+            root.progress_bar.visibility=View.VISIBLE
+
+        }
 
         return root
     }
-
 }
