@@ -5,15 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.music.nirvana.R
-import com.music.nirvana.adapters.ImageAdapter
 import com.music.nirvana.adapters.TrackAdapter
 import com.music.nirvana.models.Track
+import com.spotify.android.appremote.api.ConnectionParams
+import com.spotify.android.appremote.api.Connector
+import com.spotify.android.appremote.api.SpotifyAppRemote
 import kaaes.spotify.webapi.android.SpotifyApi
 import kaaes.spotify.webapi.android.SpotifyCallback
 import kaaes.spotify.webapi.android.SpotifyError
@@ -26,6 +27,9 @@ class HomeFragment() : Fragment() {
 
     private lateinit var token : String
     private lateinit var recyclerView : RecyclerView
+    private val CLIENT_ID = "ecd5a410efe543cfb4439eda4c61be0c"
+    private val REDIRECT_URI = "https://www.spotify.com/"
+    private var mSpotifyAppRemote: SpotifyAppRemote? = null
 
     constructor(context: Context) : this()
 
@@ -40,7 +44,6 @@ class HomeFragment() : Fragment() {
         recyclerView = root.findViewById(R.id.recycler_view)
         token = prefs.getString("Access Token","null").toString()
         //Toast.makeText(requireContext(),token,Toast.LENGTH_LONG).show()
-        getResults()
         return root
     }
 
@@ -63,15 +66,40 @@ class HomeFragment() : Fragment() {
                             track.track.uri))
                 }
 
-                val adapter = TrackAdapter(context!!,tracks)
+                val adapter = TrackAdapter(context!!,tracks,mSpotifyAppRemote!!)
                 recyclerView.adapter=adapter
                 recyclerView.layoutManager= LinearLayoutManager(context!!)
-                Toast.makeText(context, tracks[0].name, Toast.LENGTH_LONG).show()
             }
 
             override fun failure(error: SpotifyError) {
                 Toast.makeText(context, error.localizedMessage, Toast.LENGTH_LONG).show()
             }
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val connectionParams = ConnectionParams.Builder(CLIENT_ID)
+            .setRedirectUri(REDIRECT_URI)
+            .showAuthView(true)
+            .build()
+
+        SpotifyAppRemote.connect(context, connectionParams,
+            object : Connector.ConnectionListener {
+                override fun onConnected(spotifyAppRemote: SpotifyAppRemote) {
+                    mSpotifyAppRemote = spotifyAppRemote
+                    getResults()
+                    Toast.makeText(context, "Connected", Toast.LENGTH_LONG).show()
+                    connected()
+                }
+
+                override fun onFailure(throwable: Throwable) {
+                    Toast.makeText(context, throwable.message, Toast.LENGTH_LONG).show()
+                }
+            })
+    }
+
+    private fun connected() {
+        //mSpotifyAppRemote?.playerApi?.play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
     }
 }
